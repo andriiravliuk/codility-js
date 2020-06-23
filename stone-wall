@@ -1,0 +1,21 @@
+function solution(H) {
+    let stack = [H[0]], count = 1
+    for (let i=0; i<H.length; i++) {
+        let k = stack.length - 1
+        while (k>=0) {
+            if (stack[k] < H[i]) {
+                count++
+                stack.push(H[i])
+                break
+            } else if (stack[k] > H[i]) {
+                stack.pop()
+            } else break
+            k--
+        }
+        if (k < 0) {
+            stack.push(H[i])
+            count++
+        }
+    }
+    return count
+}

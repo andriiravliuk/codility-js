@@ -1,0 +1,33 @@
+function solution(A) {
+    // check if leader exists
+    let n = A.length
+    let candidate, size = 0
+    for (let i=0; i<n; i++) {
+        if (size === 0) {
+            candidate = A[i]
+            size++
+        } else if (candidate !== A[i]) {
+            size--
+        } else size++
+    }
+    if (size < 1) return 0
+    // extract leader and count
+    let leader, totalCount = 0
+    for (let i=0; i<n; i++) {
+        if (A[i] === candidate) {
+            totalCount++
+        }
+    }
+    if (totalCount > Math.floor(n / 2)) {
+        leader = candidate
+    } else return 0
+    // count number of equileader
+    let count = 0, res = 0
+    for (let i=0; i<n; i++) {
+        if (A[i] === leader) count++
+        if (count > Math.floor((i + 1) / 2) && (totalCount - count) > Math.floor((n - 1 - i) / 2)) {
+            res++
+        }
+    }
+    return res
+}

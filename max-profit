@@ -1,0 +1,13 @@
+function solution(A) {
+    let profit = []
+    let n = A.length
+    for (let i=0; i<n; i++) {
+        if (i === 0) profit[i] = 0
+        else profit[i] = Math.max(profit[i - 1] + A[i] - A[i-1], 0)
+    }
+    let max_profit = 0
+    for (let i=0; i<n; i++) {
+        max_profit = Math.max(max_profit, profit[i])
+    }
+    return max_profit
+}

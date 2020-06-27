@@ -1,0 +1,7 @@
+function solution(N) {
+    let p = parseInt(Math.sqrt(N))
+    while (p >= 1) {
+        if (N % p === 0) return 2 * (p + N / p)
+        p--
+    }
+}

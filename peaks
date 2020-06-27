@@ -1,0 +1,29 @@
+function solution(A) {
+    let n = A.length
+    let i = 1, peaks = new Array(n).fill(0)
+    while (i < n - 1) {
+        if (A[i] > A[i - 1] && A[i] > A[i + 1]) {
+            peaks[i] = 1
+            i += 2
+        } else i++
+    }
+    let count = [0]
+    for (let i=0; i<n; i++) {
+        count[i + 1] = count[i] + peaks[i]
+    }
+    let res = count[n]
+    if (res < 2) return res
+    while (res >= 2) {
+        if (n % res !== 0) {
+            res--
+            continue
+        }
+        let k = n / res
+        for (let j=1; j<=res; j++) {
+            if ((count[k*j] - count[k*j - k]) < 1) break
+            if (j === res) return res
+        }
+        res--
+    }
+    return res
+}

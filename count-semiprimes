@@ -1,0 +1,22 @@
+function solution(N, P, Q) {
+    let count = [0]
+    for (let i=1; i<=N; i++) {
+        let k=2, dc=0
+        count[i] = count[i - 1]
+        while (k*k <= i) {
+            if (dc > 2 || i % Math.pow(k, 3) == 0) {
+                dc = 0
+                break
+            }
+            if (i % k == 0) dc += 2
+            k++
+        }
+        if (dc == 2) count[i] = count[i - 1] + 1
+    }
+
+    let res = []
+    for (let i=0; i<P.length; i++) {
+        res[i] = count[Q[i]] - count[P[i] - 1]
+    }
+    return res
+}

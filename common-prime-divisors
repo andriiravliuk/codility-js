@@ -1,0 +1,25 @@
+function solution(A, B) {
+    let res = 0
+    for (let i=0; i<A.length; i++) {
+        if (hasSameDivisor(A[i], B[i], 2)) res++
+    }
+    return res
+}
+
+function hasSameDivisor(a, b, k) {
+    if (a == b) return true
+    if (a == 1 || b == 1) return false
+    if (k * k > Math.max(a, b)) return false
+    let na = a, nb = b
+    if (a % k == 0 && b % k == 0) {
+        na = a / k
+        nb = b / k
+        for (let i=2; Math.pow(k,i)<=Math.max(a,b); i++) {
+            if (na % k == 0) na = na / k
+            if (nb % k == 0) nb = nb / k
+        }
+    } else if (a % k == 0 || b % k == 0) {
+        return false
+    }
+    return hasSameDivisor(na, nb, k == 2 ? 3 : k + 2)
+}

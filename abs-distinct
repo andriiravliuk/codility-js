@@ -1,0 +1,12 @@
+function solution(A) {
+    // write your code in JavaScript (Node.js 8.9.4)
+    let abs = []
+    let count = 0
+    for (let i=0; i<A.length; i++) {
+        if (!abs[Math.abs(A[i])]) {
+            count++
+        }
+        abs[Math.abs(A[i])] = 1
+    }
+    return count
+}

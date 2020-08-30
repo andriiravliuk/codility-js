@@ -1,0 +1,19 @@
+function solution(M, A) {
+    // write your code in JavaScript (Node.js 8.9.4)
+    const n = A.length
+    let count = 0
+    
+    let j = 0
+    let arr = []
+    for (let i=0; i<n; i++) {
+        while (j < n && !arr[A[j]]) {
+            arr[A[j]] = 1
+            j++
+        }
+        count += j - i
+        arr[A[i]] = null
+        if (count > 1000000000) return 1000000000
+    }
+    
+    return count
+}

@@ -1,0 +1,24 @@
+function solution(A) {
+    // write your code in JavaScript (Node.js 8.9.4)
+    A.sort((a, b) => a - b)
+    const n = A.length
+    let i = 0, j = n - 1
+    let min = Math.abs(A[i] + A[j])
+
+    while (i <= j) {
+        const curSum = Math.abs(A[i] + A[j])
+        const backSum = Math.abs(A[i + 1] + A[j])
+        const frontSum = Math.abs(A[i] + A[j - 1])
+        min = Math.min(min, curSum)
+        if (backSum <= curSum) {
+            i++
+        } else if (frontSum <= curSum) {
+            j--
+        } else {
+            i++
+            j--
+        }
+    }
+    
+    return min
+}

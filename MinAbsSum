@@ -1,0 +1,36 @@
+function solution(A) {
+    // write your code in JavaScript (Node.js 8.9.4)
+    const n = A.length
+
+    let sum = 0, count = []
+    for (let i=0; i<n; i++) {
+        if (A[i] < 0) A[i] = -A[i]
+        sum += A[i]
+        count[A[i]] = count[A[i]] ? count[A[i]] + 1 : 1
+    }
+    A.sort((a, b) => a - b)
+    
+    let mid = Math.floor(sum / 2)
+    let dp = new Array(mid + 1).fill(-1)
+    dp[0] = 0
+    for (let i=0; i<count.length; i++) {
+        if (count[i] > 0) {
+            for (let j=0; j<=mid; j++) {
+                if (dp[j] >= 0) {
+                    dp[j] = count[i]
+                } else if (j >= i && dp[j - i] > 0) {
+                    dp[j] = dp[j - i] - 1
+                }
+            }
+        }
+    }
+    
+    let res = sum
+    for (let i=1; i<=mid; i++) {
+        if (dp[i] >= 0) {
+            res = Math.min(res, sum - 2 * i)
+        }
+    }
+    
+    return res
+}

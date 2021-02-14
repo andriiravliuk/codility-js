@@ -1,0 +1,32 @@
+function solution(A) {
+    // write your code in JavaScript (Node.js 8.9.4)
+    const tmpA = [...A, 0]
+    let newA = [], up = true
+    for (let i=1; i<tmpA.length; i++) {
+        if (tmpA[i] > tmpA[i - 1] && !up) {
+            up = true
+            newA.push(tmpA[i - 1])
+        } else if (tmpA[i] < tmpA[i - 1] && up) {
+            up = false
+            newA.push(tmpA[i - 1])
+        }
+    }
+
+    let left = [], right = [], lmax = 0, rmax = 0
+    const len = Math.floor(newA.length / 2)
+
+    for (let i=0; i<len; i++) {
+        lmax = Math.max(lmax, newA[2 * i])
+        rmax = Math.max(rmax, newA[2 * (len - i)])
+        left.push(lmax)
+        right.push(rmax)
+    }
+
+    let res = 0
+    for (let i=0; i<len; i++) {
+        const depth = Math.min(left[i], right[len - i - 1]) - newA[2 * i + 1]
+        res = Math.max(res, depth)
+    }
+
+    return res
+}

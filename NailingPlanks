@@ -1,0 +1,40 @@
+function solution(A, B, C) {
+    // write your code in JavaScript (Node.js 8.9.4)
+    if (C.length === 1) {
+        for (let i=0; i<A.length; i++) {
+            if (C[0] > B[i] || C[0] < A[i]) return -1
+        }
+        return 1
+    }
+
+    const maxB = Math.max(...B)
+
+    let min = 0, max = C.length - 1, possible = false
+    while (min <= max) {
+        const mid = parseInt((min + max) / 2)
+        let nails = new Array(maxB + 1).fill(0)
+        for (let i=0; i<=mid; i++) {
+            nails[C[i]] = 1
+        }
+        for (let i=1; i<=maxB; i++) {
+            nails[i] += nails[i - 1]
+        }
+        if (allNailed(A, B, nails)) {
+            possible = true
+            if (max == mid) break;
+            max = mid
+        } else {
+            min = mid + 1
+        }
+    }
+
+    return possible ? max + 1 : -1
+}
+
+function allNailed(A, B, nails) {
+    for (let i=0; i<A.length; i++) {
+        if (nails[A[i] - 1] === nails[B[i]]) return false
+    }
+
+    return true
+}

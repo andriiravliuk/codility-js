@@ -1,0 +1,11 @@
+
+function solution(A) {
+    let dp = [A[0], ...Array(A.length - 1).fill(-Infinity)]
+    for (let i=1; i<A.length; i++) {
+        for (let j=1; j<=6; j++) {
+            if (i >= j) dp[i] = Math.max(dp[i], dp[i - j] + A[i])
+        }
+    }
+
+    return dp[A.length - 1]
+}

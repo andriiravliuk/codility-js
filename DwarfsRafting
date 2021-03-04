@@ -1,0 +1,57 @@
+function solution(N, S, T) {
+    const mid = N / 2
+    let seg = Array(4).fill(Math.pow(mid, 2))
+    let dseg = Array(4).fill(0)
+    const barrels = S.split(' ')
+    const dwarfs = T.split(' ')
+
+    if (S.length > 0) {
+        for (let i=0; i<barrels.length; i++) {
+            const bp = barrels[i]
+            const [row, col] = [bp.slice(0, -1), bp[bp.length - 1]]
+            if (col.charCodeAt(0) - 'A'.charCodeAt(0) >= mid) {
+                if (+row <= mid) {
+                    seg[1]--
+                } else {
+                    seg[3]--
+                }
+            } else {
+                if (+row <= mid) {
+                    seg[0]--
+                } else {
+                    seg[2]--
+                }
+            }
+        }
+    }
+
+    const px = Math.min(seg[1], seg[2])
+    const nx = Math.min(seg[0], seg[3])
+    let res = (px + nx) * 2
+
+    if (T.length > 0) {
+        for (let i=0; i<dwarfs.length; i++) {
+            const dp = dwarfs[i]
+            const [row, col] = [dp.slice(0, -1), dp[dp.length - 1]]
+            if (col.charCodeAt(0) - 'A'.charCodeAt(0) >= mid) {
+                if (+row <= mid) {
+                    dseg[1]++
+                } else {
+                    dseg[3]++
+                }
+            } else {
+                if (+row <= mid) {
+                    dseg[0]++
+                } else {
+                    dseg[2]++
+                }
+            }
+        }
+
+        if (dseg[0] > nx || dseg[3] > nx || dseg[1] > px || dseg[2] > px) return -1
+        res -= dwarfs.length
+    }
+
+    return res
+}
+
